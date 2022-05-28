@@ -17,7 +17,6 @@ def checkout(skus):
     print(sku_dict)
     for sku in sku_dict.keys():
         price = 0
-        print(sku_dict[sku])
         item = price_cat[sku]
         if item.get("OFFER",False):
             quant = list(item['OFFER'].keys())[0]
@@ -28,15 +27,17 @@ def checkout(skus):
                 while sku_dict[sku] - quant * i > quant:
                     i = i + 1
                 price = i * item['OFFER'][quant] + ((sku_dict[sku] - (quant * i))* item['PRICE'])
+            elif sku_dict[sku] < quant:
+                price = sku_dict[sku] * item['PRICE']
         else:
             price = sku_dict[sku] * item['PRICE']
         print(price)
         basket = basket + price
-    return basket
+    return int(basket)
 
 
 
 
-print(checkout("A,A"))
+print(checkout("A,A,A,B,B,B"))
 
 
