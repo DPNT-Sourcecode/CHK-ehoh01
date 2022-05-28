@@ -103,5 +103,5 @@ def checkout(skus):
             basket = basket + price
     return int(basket)
 
-print(checkout("QWERTYUIO"))
+# print(checkout("QWERTYUIOPASDFGHJKLZXCVBNM"))
 
