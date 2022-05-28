@@ -53,20 +53,18 @@ def checkout(skus):
         if price_cat[sku].get("FREE",False):
             discounted_list.append(sku)
         elif price_cat[sku].get("GROUP",False):
-            print("in")
             group_list.append(sku)
         else:
             key_list.append(sku)
     discounted_list.extend(key_list)
     price = 0
     sku_dict_group = {}
-    print(group_list)
+
     for sku in group_list:
-            print("in")
             sku_dict_group[sku] = sku_dict[sku]
     sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
     sum_of_group_items =sum(sku_dict_group.values())
-    print(sum_of_group_items)
+
     if sum_of_group_items % group_quan == 0:
         price = (sum_of_group_items / group_quan)*group_price
         basket = basket + price
@@ -75,7 +73,8 @@ def checkout(skus):
         while sum_of_group_items - group_quan * i > group_quan:
             i = i + 1
         difference = sum_of_group_items - group_quan * i
-        price = group_quan * i * group_price
+        price = i * group_price
+    
         while difference > 0:
             for sku in sku_dict_group_sorted:
                 if sku_dict_group_sorted[sku] >= difference:
@@ -142,5 +141,5 @@ def checkout(skus):
         
     return int(basket)
 
-print(checkout("TTTSSSZZ"))
+# print(checkout("TTTSSSZZ"))
 
