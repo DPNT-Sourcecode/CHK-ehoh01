@@ -3,7 +3,34 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
-price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130 , 5 : 200}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15}, "E" : {"PRICE" : 40, "FREE" : {2 : {"B" : 1 }}},"F" : {"PRICE" : 10,"IF_FREE":3}}
+price_cat = {
+    "A": {"PRICE": 50, "OFFER": {3: 130, 5: 200}},
+    "B": {"PRICE": 30, "OFFER": {2: 45}},
+    "C": {"PRICE": 20},
+    "D": {"PRICE": 15},
+    "E": {"PRICE": 40, "FREE": {2: {"B": 1}}},
+    "F": {"PRICE": 10, "IF_FREE": 3},
+    "G": {"PRICE": 20},
+    "H": {"PRICE": 10, "OFFER": {5: 45, 10: 80}},
+    "I": {"PRICE": 35},
+    "J": {"PRICE": 60},
+    "K": {"PRICE": 80, "OFFER": {2: 150}},
+    "L": {"PRICE": 90},
+    "M": {"PRICE": 15},
+    "N": {"PRICE": 40, "FREE": {3: {"M": 1}}},
+    "P": {"PRICE": 50, "OFFER": {5 : 200}},
+    "Q": {"PRICE": 30, "OFFER": {3 : 80}},
+    "R": {"PRICE": 50, "FREE": {3: {"Q": 1}}},
+    "S": {"PRICE": 30},
+    "T": {"PRICE": 20},
+    "U": {"PRICE": 40, "IF_FREE": 3},
+    "V": {"PRICE": 50, "OFFER": {2: 90, 3: 130}},
+    "W": {"PRICE": 20},
+    "X": {"PRICE": 90},
+    "Y": {"PRICE": 10},
+    "Z": {"PRICE": 50}
+}
+
 
 def split(word):
     return [char for char in word]
@@ -75,4 +102,5 @@ def checkout(skus):
             basket = basket + price
     return int(basket)
 
+print(checkout("QWERTYUIOPASDFGHJKLZXCVBNM"))
 
