@@ -57,7 +57,7 @@ from runner.user_input_action import get_user_input
 
 runner = QueueBasedImplementationRunnerBuilder()\
     .set_config(Utils.get_runner_config())\
-    .with_solution_for('sum', sum_solution.compute)\
+    .with_solution_for('sum', sum_solution.sum)\
     .with_solution_for('hello', hello_solution.hello)\
     .with_solution_for('array_sum', array_sum.compute)\
     .with_solution_for('int_range', int_range.generate)\
@@ -71,3 +71,4 @@ ChallengeSession\
     .with_config(Utils.get_config())\
     .with_action_provider(lambda: get_user_input(sys.argv[1:]))\
     .start()
+
