@@ -69,7 +69,7 @@ def checkout(skus):
         if sku_dict_original.get(sku,False):
             sku_dict_group_sorted[sku] = sku_dict_original[sku]
     sum_of_group_items =sum(sku_dict_group.values())
-
+    print(sku_dict_group_sorted)
     if sum_of_group_items % group_quan == 0:
         price = (sum_of_group_items / group_quan)*group_price
     elif sum_of_group_items > group_quan:
@@ -92,6 +92,7 @@ def checkout(skus):
                     difference = difference - sku_dict_group[sku]
     else:
         for sku in sku_dict_group_sorted:
+            print(sku)
             price = sku_dict[sku] * price_cat[sku]['PRICE']
     basket = basket + price
     
@@ -147,6 +148,6 @@ def checkout(skus):
         
     return int(basket)
 
-# print(checkout("STXS"))
+print(checkout("ST"))
 
 
