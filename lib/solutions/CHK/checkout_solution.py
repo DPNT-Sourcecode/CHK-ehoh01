@@ -64,10 +64,9 @@ def checkout(skus):
             sku_dict_group[sku] = sku_dict[sku]
     sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
     sum_of_group_items =sum(sku_dict_group.values())
-
+    print(sum_of_group_items)
     if sum_of_group_items % group_quan == 0:
         price = (sum_of_group_items / group_quan)*group_price
-        basket = basket + price
     elif sum_of_group_items > group_quan:
         i = 1
         while sum_of_group_items - group_quan * i > group_quan:
@@ -141,6 +140,6 @@ def checkout(skus):
         
     return int(basket)
 
-# print(checkout("TTTSSSZZ"))
+print(checkout("STX"))
 
 
