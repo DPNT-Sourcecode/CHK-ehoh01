@@ -38,6 +38,7 @@ def split(word):
     return [char for char in word]
 
 def checkout(skus):
+    basket = 0
     sku_list = split(skus)
     sku_dict = {}
     for sku in sku_list:
@@ -57,8 +58,36 @@ def checkout(skus):
         else:
             key_list.append(sku)
     discounted_list.extend(key_list)
+    price = 0
+    sku_dict_group = {}
+    print(group_list)
+    for sku in group_list:
+            print("in")
+            sku_dict_group[sku] = sku_dict[sku]
+            sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
+            sum_of_group_items =sum(sku_dict_group.values())
+            print(sum_of_group_items)
+            if sum_of_group_items % group_quan == 0:
+                price = (sum_of_group_items / group_quan)*group_price
+                basket = basket + price
+            elif sum_of_group_items > group_quan:
+                i = 1
+                while sum_of_group_items - group_quan * i > group_quan:
+                    i = i + 1
+                difference = sum_of_group_items - group_quan * i
+                price = group_quan * i * group_price
+                while difference > 0:
+                    for sku in sku_dict_group_sorted:
+                        if sku_dict_group_sorted[sku] >= difference:
+                            price = price + difference * price_cat[sku]["PRICE"]
+                            break
+                        elif sku_dict_group_sorted[sku] >= difference:
+                            price = price + sku_dict_group[sku] * price_cat[sku]["PRICE"]
+            else:
+                for sku in sku_dict_group_sorted:
+                    price = sku_dict[sku] * item['PRICE']
+            basket = basket + price
     
-    basket = 0
     for sku in discounted_list:
         price = 0
         item = price_cat[sku]
@@ -107,35 +136,8 @@ def checkout(skus):
             else:
                 price = sku_dict[sku] * item['PRICE']
             basket = basket + price
-        price = 0
-        sku_dict_group = {}
-        print(group_list)
-        for sku in group_list:
-            print("in")
-            sku_dict_group[sku] = sku_dict[sku]
-        sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
-        sum_of_group_items =sum(sku_dict_group)
-        print(sum_of_group_items)
-        if sum_of_group_items % group_quan == 0:
-            price = (sum_of_group_items / group_quan)*group_price
-            basket = basket + price
-        elif sum_of_group_items > group_quan:
-            i = 1
-            while sum_of_group_items - group_quan * i > group_quan:
-                i = i + 1
-            difference = sum_of_group_items - group_quan * i
-            price = group_quan * i * group_price
-            while difference > 0:
-                for sku in sku_dict_group_sorted:
-                    if sku_dict_group_sorted[sku] >= difference:
-                        price = price + difference * price_cat[sku]["PRICE"]
-                        break
-                    elif sku_dict_group_sorted[sku] >= difference:
-                        price = price + sku_dict_group[sku] * price_cat[sku]["PRICE"]
-        else:
-            for sku in sku_dict_group_sorted:
-                price = sku_dict[sku] * item['PRICE']
-        basket = basket + price
+        
+        
     return int(basket)
 
 print(checkout("TTTSSSZZ"))
