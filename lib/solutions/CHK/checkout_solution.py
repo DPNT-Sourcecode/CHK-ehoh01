@@ -62,8 +62,9 @@ def checkout(skus):
 
     for sku in group_list:
             sku_dict_group[sku] = sku_dict[sku]
-    sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1]).reverse()}
+    sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1],reverse=True)}
     sum_of_group_items =sum(sku_dict_group.values())
+    print(group_list)
     print(sum_of_group_items)
     if sum_of_group_items % group_quan == 0:
         price = (sum_of_group_items / group_quan)*group_price
@@ -77,7 +78,7 @@ def checkout(skus):
         while difference > 0:
             for sku in sku_dict_group_sorted:
                 if sku_dict_group_sorted[sku] >= difference:
-                    print(sku)
+                    print(price)
                     price = price + difference * price_cat[sku]["PRICE"]
                     difference = 0
                     break
