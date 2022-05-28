@@ -64,29 +64,31 @@ def checkout(skus):
     for sku in group_list:
             print("in")
             sku_dict_group[sku] = sku_dict[sku]
-            sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
-            sum_of_group_items =sum(sku_dict_group.values())
-            print(sum_of_group_items)
-            if sum_of_group_items % group_quan == 0:
-                price = (sum_of_group_items / group_quan)*group_price
-                basket = basket + price
-            elif sum_of_group_items > group_quan:
-                i = 1
-                while sum_of_group_items - group_quan * i > group_quan:
-                    i = i + 1
-                difference = sum_of_group_items - group_quan * i
-                price = group_quan * i * group_price
-                while difference > 0:
-                    for sku in sku_dict_group_sorted:
-                        if sku_dict_group_sorted[sku] >= difference:
-                            price = price + difference * price_cat[sku]["PRICE"]
-                            break
-                        elif sku_dict_group_sorted[sku] >= difference:
-                            price = price + sku_dict_group[sku] * price_cat[sku]["PRICE"]
-            else:
-                for sku in sku_dict_group_sorted:
-                    price = sku_dict[sku] * item['PRICE']
-            basket = basket + price
+    sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
+    sum_of_group_items =sum(sku_dict_group.values())
+    print(sum_of_group_items)
+    if sum_of_group_items % group_quan == 0:
+        price = (sum_of_group_items / group_quan)*group_price
+        basket = basket + price
+    elif sum_of_group_items > group_quan:
+        i = 1
+        while sum_of_group_items - group_quan * i > group_quan:
+            i = i + 1
+        difference = sum_of_group_items - group_quan * i
+        price = group_quan * i * group_price
+        while difference > 0:
+            for sku in sku_dict_group_sorted:
+                if sku_dict_group_sorted[sku] >= difference:
+                    price = price + difference * price_cat[sku]["PRICE"]
+                    difference = 0
+                    break
+                elif sku_dict_group_sorted[sku] < difference:
+                    price = price + sku_dict_group[sku] * price_cat[sku]["PRICE"]
+                    difference = difference - sku_dict_group[sku]
+    else:
+        for sku in sku_dict_group_sorted:
+            price = sku_dict[sku] * item['PRICE']
+    basket = basket + price
     
     for sku in discounted_list:
         price = 0
@@ -141,3 +143,4 @@ def checkout(skus):
     return int(basket)
 
 print(checkout("TTTSSSZZ"))
+
