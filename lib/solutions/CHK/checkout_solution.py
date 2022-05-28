@@ -62,8 +62,9 @@ def checkout(skus):
                 price = min(prices)
             else:
                 price = sku_dict[sku] * item['PRICE']
+            print(price)
             basket = basket + price
     return int(basket)
 
-print(checkout("EE"))
+print(checkout("ABCDE"))
 
