@@ -3,7 +3,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
-price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130 , 5 : 200}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15}, "E" : {"PRICE" : 40, "FREE" : {2 : {"B" : 1 }}},"F" : {"PRICE" : 10, "OFFER" : {2 : 10 }}}
+price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130 , 5 : 200}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15}, "E" : {"PRICE" : 40, "FREE" : {2 : {"B" : 1 }}},"F" : {"PRICE" : 10, "OFFER" : {2 : 10},"IF":3}}
 
 def split(word):
     return [char for char in word]
@@ -43,24 +43,26 @@ def checkout(skus):
                     if sku_dict.get(other_item,False):
                         sku_dict[other_item] = sku_dict[other_item] - (quant * i / quant) * item['FREE'][quant][other_item]
             if item.get("OFFER",False):
-                for quant in item['OFFER'].keys():
-                    if sku_dict[sku] % quant == 0:
-                        price = (sku_dict[sku] / quant) * item['OFFER'][quant] 
-                        prices.append(price)
-                    elif sku_dict[sku] > quant:
+                if item.get("IF",False):
+                    if sku_dict[sku] >= item['IF']:
+                        for quant in item['OFFER'].keys():
+                            if sku_dict[sku] % quant == 0:
+                                price = (sku_dict[sku] / quant) * item['OFFER'][quant] 
+                                prices.append(price)
+                            elif sku_dict[sku] > quant:
 
-                        i = 1
-                        while sku_dict[sku] - quant * i > quant:
-                            i = i + 1
-                        price = i * item['OFFER'][quant] + ((sku_dict[sku] - (quant * i))* item['PRICE'])
-                        for q in item['OFFER'].keys():
-                            if sku_dict[sku] - (quant * i) >= q:
-                                price = i * item['OFFER'][quant] + item['OFFER'][q] + (sku_dict[sku] - (quant * i) -q)*item['PRICE']                        
-                        prices.append(price)
-                    elif sku_dict[sku] < quant:
-                        price = sku_dict[sku] * item['PRICE']
-                        prices.append(price)
-                price = min(prices)
+                                i = 1
+                                while sku_dict[sku] - quant * i > quant:
+                                    i = i + 1
+                                price = i * item['OFFER'][quant] + ((sku_dict[sku] - (quant * i))* item['PRICE'])
+                                for q in item['OFFER'].keys():
+                                    if sku_dict[sku] - (quant * i) >= q:
+                                        price = i * item['OFFER'][quant] + item['OFFER'][q] + (sku_dict[sku] - (quant * i) -q)*item['PRICE']                        
+                                prices.append(price)
+                            elif sku_dict[sku] < quant:
+                                price = sku_dict[sku] * item['PRICE']
+                                prices.append(price)
+                        price = min(prices)
             else:
                 price = sku_dict[sku] * item['PRICE']
             basket = basket + price
