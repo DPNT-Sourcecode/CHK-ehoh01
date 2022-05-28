@@ -18,6 +18,7 @@ price_cat = {
     "L": {"PRICE": 90},
     "M": {"PRICE": 15},
     "N": {"PRICE": 40, "FREE": {3: {"M": 1}}},
+    "O": {"PRICE": 10},
     "P": {"PRICE": 50, "OFFER": {5 : 200}},
     "Q": {"PRICE": 30, "OFFER": {3 : 80}},
     "R": {"PRICE": 50, "FREE": {3: {"Q": 1}}},
@@ -102,5 +103,5 @@ def checkout(skus):
             basket = basket + price
     return int(basket)
 
-print(checkout("QWERTYUIOPASDFGHJKLZXCVBNM"))
+print(checkout("QWERTYUIO"))
 
