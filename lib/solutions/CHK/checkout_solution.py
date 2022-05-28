@@ -43,8 +43,6 @@ def checkout(skus):
                     if sku_dict.get(other_item,False):
                         sku_dict[other_item] = sku_dict[other_item] - (sku_dict[sku] / quant) * item['FREE'][quant][other_item]
                         sku_dict[other_item] = sku_dict[other_item] - (quant * i / quant) * item['FREE'][quant][other_item]
-                elif sku_dict[sku] < quant:
-                    continue
             if item.get("OFFER",False):
                 for quant in item['OFFER'].keys():
                     if sku_dict[sku] % quant == 0:
@@ -66,5 +64,5 @@ def checkout(skus):
             basket = basket + price
     return int(basket)
 
-print(checkout("ABCDE"))
+print(checkout("AAAAAAAA"))
 
