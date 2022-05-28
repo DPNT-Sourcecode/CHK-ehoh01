@@ -86,7 +86,7 @@ def checkout(skus):
                     difference = difference - sku_dict_group[sku]
     else:
         for sku in sku_dict_group_sorted:
-            price = sku_dict[sku] * item['PRICE']
+            price = sku_dict[sku] * price_cat[sku]['PRICE']
     basket = basket + price
     
     for sku in discounted_list:
@@ -142,4 +142,5 @@ def checkout(skus):
     return int(basket)
 
 # print(checkout("TTTSSSZZ"))
+
 
