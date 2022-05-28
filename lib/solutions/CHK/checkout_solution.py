@@ -35,4 +35,3 @@ def checkout(skus):
             price = sku_dict[sku] * item['PRICE']
         basket = basket + price
     return int(basket)
-
