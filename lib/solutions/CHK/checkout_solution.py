@@ -65,4 +65,3 @@ def checkout(skus):
     return int(basket)
 
 print(checkout("AAAAAAAA"))
-
