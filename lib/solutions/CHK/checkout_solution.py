@@ -3,7 +3,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
-price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130 , 5 : 200}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15}, "E" : {"PRICE" : 40, "FREE" : {2 : {"B" : 1 }}}}
+price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130 , 5 : 200}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15}, "E" : {"PRICE" : 40, "FREE" : {2 : {"B" : 1 }}},"F" : {"PRICE" : 10, "OFFER" : {2 : 10 }}}
 
 def split(word):
     return [char for char in word]
@@ -63,6 +63,5 @@ def checkout(skus):
                 price = min(prices)
             else:
                 price = sku_dict[sku] * item['PRICE']
-            print(price)
             basket = basket + price
     return int(basket)
