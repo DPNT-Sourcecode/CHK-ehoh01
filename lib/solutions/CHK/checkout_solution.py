@@ -5,8 +5,11 @@
 
 price_cat = {"A" : {"PRICE" : 50, "OFFER" : {3 : 130}}, "B" : {"PRICE" : 30, "OFFER" : {2 : 45}}, "C" : {"PRICE" : 20}, "D" : {"PRICE" : 15} }
 
+def split(word):
+    return [char for char in word]
+
 def checkout(skus):
-    sku_list = skus.split(",")
+    sku_list = split(skus)
     sku_dict = {}
     for sku in sku_list:
         if not price_cat.get(sku,False):
@@ -32,3 +35,4 @@ def checkout(skus):
             price = sku_dict[sku] * item['PRICE']
         basket = basket + price
     return int(basket)
+
