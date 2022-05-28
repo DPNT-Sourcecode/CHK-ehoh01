@@ -2,7 +2,8 @@
 
 # noinspection PyUnusedLocal
 # skus = unicode string
-
+group_price = 45
+group_quan = 3
 price_cat = {
     "A": {"PRICE": 50, "OFFER": {3: 130, 5: 200}},
     "B": {"PRICE": 30, "OFFER": {2: 45}},
@@ -14,7 +15,7 @@ price_cat = {
     "H": {"PRICE": 10, "OFFER": {5: 45, 10: 80}},
     "I": {"PRICE": 35},
     "J": {"PRICE": 60},
-    "K": {"PRICE": 80, "OFFER": {2: 150}},
+    "K": {"PRICE": 70, "OFFER": {2: 120}},
     "L": {"PRICE": 90},
     "M": {"PRICE": 15},
     "N": {"PRICE": 40, "FREE": {3: {"M": 1}}},
@@ -22,14 +23,14 @@ price_cat = {
     "P": {"PRICE": 50, "OFFER": {5 : 200}},
     "Q": {"PRICE": 30, "OFFER": {3 : 80}},
     "R": {"PRICE": 50, "FREE": {3: {"Q": 1}}},
-    "S": {"PRICE": 30},
-    "T": {"PRICE": 20},
+    "S": {"PRICE": 20, "GROUP" : True},
+    "T": {"PRICE": 20 , "GROUP" : True},
     "U": {"PRICE": 40, "IF_FREE": 4},
     "V": {"PRICE": 50, "OFFER": {2: 90, 3: 130}},
     "W": {"PRICE": 20},
-    "X": {"PRICE": 90},
-    "Y": {"PRICE": 10},
-    "Z": {"PRICE": 50}
+    "X": {"PRICE": 17 , "GROUP" : True},
+    "Y": {"PRICE": 20, "GROUP" : True},
+    "Z": {"PRICE": 21, "GROUP" : True}
 }
 
 
@@ -46,9 +47,12 @@ def checkout(skus):
         sku_dict[sku] = count +1
     key_list = []
     discounted_list =[]
+    group_list = []
     for sku in sku_dict.keys():
         if price_cat[sku].get("FREE",False):
             discounted_list.append(sku)
+        elif price_cat[sku].get("GROUP",False):
+            group_list.append(sku)
         else:
             key_list.append(sku)
     discounted_list.extend(key_list)
@@ -101,6 +105,33 @@ def checkout(skus):
             else:
                 price = sku_dict[sku] * item['PRICE']
             basket = basket + price
+        price = 0
+        sku_dict_group = {}
+        for sku in group_list:
+            sku_dict_group[sku] = sku_dict[sku]
+        sku_dict_group_sorted = {k: v for k, v in sorted(sku_dict_group.items(), key=lambda item: item[1])}
+        sum_of_group_items =sum(sku_dict_group)
+        print(sum_of_group_items)
+        if sum_of_group_items % group_quan == 0:
+            price = (sum_of_group_items / group_quan)*group_price
+            basket = basket + price
+        elif sum_of_group_items > group_quan:
+            i = 1
+            while sum_of_group_items - group_quan * i > group_quan:
+                i = i + 1
+            difference = sum_of_group_items - group_quan * i
+            price = group_quan * i * group_price
+            while difference > 0:
+                for sku in sku_dict_group_sorted:
+                    if sku_dict_group_sorted[sku] >= difference:
+                        price = price + difference * price_cat[sku]["PRICE"]
+                        break
+                    elif sku_dict_group_sorted[sku] >= difference:
+                        price = price + sku_dict_group[sku] * price_cat[sku]["PRICE"]
+        else:
+            for sku in sku_dict_group_sorted:
+                price = sku_dict[sku] * item['PRICE']
+        basket = basket + price
     return int(basket)
 
-# print(checkout("UUUU"))
+print(checkout("TTTSSSZZ"))
